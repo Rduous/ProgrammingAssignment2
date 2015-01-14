@@ -9,14 +9,14 @@
 
 makeCacheMatrix <- function(x = matrix()) {
     # The cache variable
-    inverse <- NULL
+    i <- NULL
     
     # The getInverse function will lazy-initialize the cache variable
     getInverse <- function(...) {
-        if (is.null(inverse)) {
-            inverse <-- solve(x, ...)
+        if (is.null(i)) {
+            i <<- solve(x, ...)
         }
-        inverse
+        i
     }
     
     # A getter to allow access to the matrix data
@@ -24,8 +24,8 @@ makeCacheMatrix <- function(x = matrix()) {
     
     # The setter changes the data of the "matrix" and flushes the cache
     set <- function(y) {
-        x <-- y
-        inverse <-- NULL
+        x <<- y
+        inverse <<- NULL
     }
     
     # Return a "matrix" object (really a list with functions)
