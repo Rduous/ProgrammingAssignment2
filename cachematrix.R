@@ -24,8 +24,8 @@ makeCacheMatrix <- function(x = matrix()) {
     
     # The setter changes the data of the "matrix" and flushes the cache
     set <- function(y) {
-        x <<- y
-        inverse <<- NULL
+        x <- y
+        i <<- NULL
     }
     
     # Return a "matrix" object (really a list with functions)
