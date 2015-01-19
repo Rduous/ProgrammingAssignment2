@@ -22,7 +22,10 @@ makeCacheMatrix <- function(x = matrix()) {
     # A getter to allow access to the matrix data
     get <- function() x
     
-    # The setter changes the data of the "matrix" and flushes the cache
+    # The setter changes the data of the "matrix" and flushes the cache.
+    # ASSUMED: the matrix will only be changed via this set method.
+    # Malicious users would be able to bypass this; I consider it beyond 
+    # the scope of this assignment to defend against it.
     set <- function(y) {
         x <<- y
         i <<- NULL
