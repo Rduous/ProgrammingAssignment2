@@ -6,18 +6,16 @@
 ## named member of the "matrix") will calculate the inverse the first time the
 ## function is called, and thereafter return the cached value. Altering the 
 ## matrix (via the set function) will cause the cache to be flushed.
-
 makeCacheMatrix <- function(x = matrix()) {
+
     # The cache variable
     i <- NULL
     
-    # The getInverse function will lazy-initialize the cache variable
-    getInverse <- function(...) {
-        if (is.null(i)) {
-            i <<- solve(x, ...)
-        }
-        i
-    }
+    # Get the inverse
+    getInverse <- function() i
+    
+    # Set the inverse 
+    setInverse <- function(inverse) i <<- inverse
     
     # A getter to allow access to the matrix data
     get <- function() x
@@ -32,14 +30,18 @@ makeCacheMatrix <- function(x = matrix()) {
     }
     
     # Return a "matrix" object (really a list with functions)
-    list(set = set, get = get, getInverse = getInverse)
+    list(set = set,get = get,getInverse = getInverse,setInverse = setInverse)
 }
 
 
 ## Function which accepts an augmented "matrix" object and uses its getInverse
 ## function to return the inverse of the matrix. 
-
 cacheSolve <- function(x, ...) {
-        i <- x$getInverse(...)
-        i
+    i <- x$getInverse()
+    if (is.null(i)) {
+        print("Calculating inverse")
+        i <- solve(x$get(), ...)
+        x$setInverse(i)
+    }
+    return(i)
 }
