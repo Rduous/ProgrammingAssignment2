@@ -2,9 +2,7 @@
 ## Use these to create "matrices" that can cache their inverse matrix.
 
 ## Function that accepts a matrix and returns an augmented matrix object which 
-## can cache the value of the matrix's inverse. The getInverse function (a 
-## named member of the "matrix") will calculate the inverse the first time the
-## function is called, and thereafter return the cached value. Altering the 
+## can cache the value of the matrix's inverse. Altering the 
 ## matrix (via the set function) will cause the cache to be flushed.
 makeCacheMatrix <- function(x = matrix()) {
 
@@ -35,7 +33,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## Function which accepts an augmented "matrix" object and uses its getInverse
-## function to return the inverse of the matrix. 
+## function to return the inverse of the matrix. Utilizes the caching functions
+## of the cachematrix to avoid repeated computations of the inverse.
 cacheSolve <- function(x, ...) {
     i <- x$getInverse()
     if (is.null(i)) {
